@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --exec babel-node ./api/index.js",
+    "start": "nodemon --exec babel-node ./mongodb/index.js",
     "test": "jest"
   },
   "keywords": [],
@@ -28,5 +29,16 @@
   "devDependencies": {
     "jest": "^27.2.5",
     "supertest": "^6.1.6"
-  }
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jass1321/DAWA-BlogTechMicroservicios.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Jass1321/DAWA-BlogTechMicroservicios/issues"
+  },
+  "homepage": "https://github.com/Jass1321/DAWA-BlogTechMicroservicios#readme"
 }
