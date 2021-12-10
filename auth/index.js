@@ -1,4 +1,4 @@
-import jwt  from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { secret } from "../config/config";
 import { response } from "../network";
 
@@ -18,7 +18,7 @@ export const sign = (payload) => {
 export const verify = (token) => {
     return jwt.verify(token, secret);
 };
-  
+
 //? Ahora vamos crear funciones que se encarguen de
 //? recibir y validar los token
 
@@ -29,58 +29,58 @@ export const verify = (token) => {
  * @param {*} authorization: string
  * @param {*} res: Response
  */
- const getToken = (authorization, res) => {
+const getToken = (authorization, res) => {
     if (authorization === null) {
-      response({
-        res,
-        ok: false,
-        status: 403,
-        data: { message: "Token not found" },
-      });
-    }
-  
-    if (authorization.indexOf("Bearer") === -1) {
-      response({
-        res,
-        ok: false,
-        status: 403,
-        data: { message: "Format token invalid" },
-      });
+        response({
+            res,
+            ok: false,
+            status: 403,
+            data: { message: "Token not found" },
+        });
     }
 
-  //? Bearer <token>
-  //* split → convierte un string en un array
-  const token = authorization.split(" ")[1];
-  //? [Bearer, token]
-  return token;
+    if (authorization.indexOf("Bearer") === -1) {
+        response({
+            res,
+            ok: false,
+            status: 403,
+            data: { message: "Format token invalid" },
+        });
+    }
+
+    //? Bearer <token>
+    //* split → convierte un string en un array
+    const token = authorization.split(" ")[1];
+    //? [Bearer, token]
+    return token;
 };
-  
+
 /**
  * @param {*} req: Request
  * @param {*} res: Response
  * @param {*} next: Next
  */
- export const checkToken = (req, res, next) => {
+export const checkToken = (req, res, next) => {
     //? Esto obtiene el valor de mi hader con el key authorization
     const authorization = req.headers.authorization || null;
     //? obtengo el token
     const token = getToken(authorization, res);
     //? nos toca validar el token
     const decoded = verify(token);
-  
+
     //? Valido si el decoded tiene algun error
     if (!decoded) {
-      response({
-        res,
-        ok: false,
-        status: 403,
-        data: { message: "Invalid Token" },
-      });
+        response({
+            res,
+            ok: false,
+            status: 403,
+            data: { message: "Invalid Token" },
+        });
     }
-  
+
     //? Guardo el decoded dentro del request
     req.decoded = decoded;
-  
+
     //? Todo esta ok puede seguir
     next();
-  };
+};

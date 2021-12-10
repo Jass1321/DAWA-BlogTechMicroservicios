@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import mongoose from "mongoose";
 
 //*para que moongose sea scope global
